@@ -7,6 +7,8 @@
 use strict;
 use warnings;
 
+use utf8;
+
 use Test::More tests => 6;
 
 BEGIN { use_ok('Lingua::JA::Mail') };
@@ -49,7 +51,7 @@ Subject:
 MIME-Version: 1.0
 Content-Type: text/plain; charset=ISO-2022-JP
 Content-Transfer-Encoding: 7bit
-X-Mail-Composer: Mail.pm v0.01 (Lingua::JA::Mail http://www.cpan.org/)
+X-Mail-Composer: Mail.pm v0.02 (Lingua::JA::Mail http://www.cpan.org/)
 
 日本語で書かれた本文。
 EOF
@@ -94,7 +96,7 @@ Subject:
 MIME-Version: 1.0
 Content-Type: text/plain; charset=ISO-2022-JP
 Content-Transfer-Encoding: 7bit
-X-Mail-Composer: Mail.pm v0.01 (Lingua::JA::Mail http://www.cpan.org/)
+X-Mail-Composer: Mail.pm v0.02 (Lingua::JA::Mail http://www.cpan.org/)
 
 日本語で書かれた本文。とても長い。長い長いお話。ちゃんとエンコードできるのでしょうか？
 EOF
@@ -145,7 +147,7 @@ Subject:
 MIME-Version: 1.0
 Content-Type: text/plain; charset=ISO-2022-JP
 Content-Transfer-Encoding: 7bit
-X-Mail-Composer: Mail.pm v0.01 (Lingua::JA::Mail http://www.cpan.org/)
+X-Mail-Composer: Mail.pm v0.02 (Lingua::JA::Mail http://www.cpan.org/)
 
 日本語で書かれた本文。とても長い。長い長いお話。ちゃんとエンコードできるのでしょうか？
 EOF
@@ -239,7 +241,7 @@ Subject:
 MIME-Version: 1.0
 Content-Type: text/plain; charset=ISO-2022-JP
 Content-Transfer-Encoding: 7bit
-X-Mail-Composer: Mail.pm v0.01 (Lingua::JA::Mail http://www.cpan.org/)
+X-Mail-Composer: Mail.pm v0.02 (Lingua::JA::Mail http://www.cpan.org/)
 
 日本語で書かれた本文。とても長い。長い長いお話。ちゃんとエンコードできるのでしょうか？
 EOF

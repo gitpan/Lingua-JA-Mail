@@ -1,9 +1,11 @@
 package Lingua::JA::Mail;
 
-our $VERSION = '0.01'; # 2003-04-01 (since 2003-03-05)
+our $VERSION = '0.02'; # 2003-04-03 (since 2003-03-05)
 
 our @ISA = qw(Lingua::JA::Mail::Header);
 use Lingua::JA::Mail::Header;
+	# When you `require' this base module for some reason,
+	# you had better specify the absolute path to the module.
 
 use 5.008;
 use strict;
@@ -43,7 +45,7 @@ EOF
 	
 	$header = join("\n", $header, $header2);
 	
-	my $body = encode( 'iso-2022-jp', decode('utf8', $$self{'body'}) );
+	my $body = encode('iso-2022-jp', $$self{'body'});
 	
 	return "$header\n\n$body";
 }
@@ -72,6 +74,7 @@ Lingua::JA::Mail - compose mail with Japanese charset
 
 =head1 SYNOPSIS
 
+ use utf8;
  use Lingua::JA::Mail;
  
  $mail = Lingua::JA::Mail->new;
@@ -151,7 +154,7 @@ At the default, it is supposed that the sendmail command is `sendmail' under a l
 
 =over
 
-=item Perl Module: L<Lingua::JA::Mail::Header>
+=item module: L<Lingua::JA::Mail::Header>
 
 =item RFC2822: L<http://www.ietf.org/rfc/rfc2822.txt> (Mail)
 
@@ -163,15 +166,15 @@ At the default, it is supposed that the sendmail command is `sendmail' under a l
 
 =item RFC1468: L<http://www.ietf.org/rfc/rfc1468.txt> (ISO-2022-JP)
 
-=item Perl Module: L<MIME::Base64>
+=item module: L<Encode>
 
-=item Perl Module: L<Encode>
+=item module: L<MIME::Base64>
 
 =back
 
 =head1 NOTES
 
-This module runs under Unicode/UTF-8 environment (hence Perl5.8 or later is required), you should input octets with UTF-8 charset (still do not turn utf8 flag on).
+This module runs under Unicode/UTF-8 environment (hence Perl5.8 or later is required), you should input octets with UTF-8 charset. Please C<use utf8;> pragma to enable to detect strings as UTF-8 in your source code.
 
 =head1 TO DO
 

@@ -1,6 +1,6 @@
 package Lingua::JA::Mail::Header;
 
-our $VERSION = '0.01_01'; # 2003-04-01 (since 2003-03-05)
+our $VERSION = '0.02'; # 2003-04-03 (since 2003-03-05)
 
 use 5.008;
 use strict;
@@ -118,7 +118,7 @@ sub _add_mailbox {
 	my $address;
 	if ($name) {
 		if ( _check_if_contain_japanese($name) ) {
-			my $name = encoded_header( decode('utf8', $name) );
+			my $name = encoded_header($name);
 			$address = "$name\n <$addr_spec>";
 		}
 		else {
@@ -167,7 +167,7 @@ sub _add_mailbox {
 sub _check_if_contain_japanese {
 	my $string = shift;
 	
-	$string = decode('utf8', $string);
+#	$string = decode('utf8', $string);
 	$string =~ tr/\n//d; # ignore line-break
 	return $string =~
 		tr/\x01-\x08\x0B\x0C\x0E-\x1F\x7F\x21\x23-\x5B\x5D-\x7E\x20//c;
@@ -180,7 +180,7 @@ sub _check_if_contain_japanese {
 ########################################################################
 sub subject {
 	my($self, $string) = @_;
-	$$self{'Subject'} = encoded_header( decode('utf8', $string) );
+	$$self{'Subject'} = encoded_header($string);
 	$$self{'Subject'} = "\n $$self{'Subject'}";
 	return $self;
 }
@@ -369,6 +369,7 @@ Lingua::JA::Mail::Header - build ISO-2022-JP charset 'B' encoding mail header fi
 
 =head1 SYNOPSIS
 
+ use utf8;
  use Lingua::JA::Mail::Header;
  
  $header = Lingua::JA::Mail::Header->new;
@@ -466,7 +467,7 @@ However, when you use this method, you must be in conformity with the RFC2822 sp
 
 =over
 
-=item Perl Module: L<Lingua::JA::Mail>
+=item module: L<Lingua::JA::Mail>
 
 =item RFC2822: L<http://www.ietf.org/rfc/rfc2822.txt> (Mail)
 
@@ -474,15 +475,15 @@ However, when you use this method, you must be in conformity with the RFC2822 sp
 
 =item RFC1468: L<http://www.ietf.org/rfc/rfc1468.txt> (ISO-2022-JP)
 
-=item Perl Module: L<MIME::Base64>
+=item module: L<MIME::Base64>
 
-=item Perl Module: L<Encode>
+=item module: L<Encode>
 
 =back
 
 =head1 NOTES
 
-This module runs under Unicode/UTF-8 environment (hence Perl5.8 or later is required), you should input octets with UTF-8 charset (still do not turn utf8 flag on).
+This module runs under Unicode/UTF-8 environment (hence Perl5.8 or later is required), you should input octets with UTF-8 charset. Please C<use utf8;> pragma to enable to detect strings as UTF-8 in your source code.
 
 =head1 AUTHOR
 

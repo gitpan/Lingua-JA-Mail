@@ -7,6 +7,8 @@
 use strict;
 use warnings;
 
+use utf8;
+
 use Test::More tests => 6;
 
 BEGIN { use_ok('Lingua::JA::Mail::Header') };

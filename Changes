@@ -1,0 +1,9 @@
+Revision history for Perl extension Lingua::JA::Mail.
+
+0.01  2003-04-01 05:14:15 JST
+	- rivesed to Lingua::JA::Mail & Lingua::JA::Mail::Header
+	  from their ancestor Mail::ISO2022JP
+	- rather improved methods and interface.
+
+0.00  2003-03-05~2003-03-31
+	- original version as Mail::ISO2022JP v0.01~0.05

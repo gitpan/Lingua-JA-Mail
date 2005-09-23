@@ -6,11 +6,11 @@ WriteMakefile(
     'NAME'		   => 'Lingua::JA::Mail',
     'VERSION_FROM' => 'Mail.pm', # finds $VERSION
 	'PREREQ_PM'    => {
-		'Encode'       => '1.92',
-		'MIME::Base64' => '2.12',
+		'Encode'       => '2.10',
+		'MIME::Base64' => '3.05',
 	},
 	($] >= 5.005 ? (
 		'ABSTRACT' => "compose mail with Japanese charset",
-		'AUTHOR'   => 'Masanori HATA <lovewing@geocities.co.jp>',
+		'AUTHOR'   => 'Masanori HATA <lovewing@dream.big.or.jp>',
 	) : ()),
 );

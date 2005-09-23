@@ -1,11 +1,11 @@
 package Lingua::JA::Mail;
 
-our $VERSION = '0.02'; # 2003-04-03 (since 2003-03-05)
+our $VERSION = '0.03'; # 2005-09-23 (since 2003-03-05)
 
 our @ISA = qw(Lingua::JA::Mail::Header);
 use Lingua::JA::Mail::Header;
-	# When you `require' this base module for some reason,
-	# you had better specify the absolute path to the module.
+# When you `require' this base module for some reason,
+# you had better specify absolute path to the module.
 
 use 5.008;
 use strict;
@@ -15,54 +15,66 @@ use Carp;
 use Encode;
 
 sub body {
-	my($self, $string) = @_;
-	$$self{'body'} = $string;
-	return $self;
+    my($self, $string) = @_;
+    $$self{'body'} = $string;
+    return $self;
 }
 
 sub build {
-	my $self = shift;
-	my @key = $self->_header_order;
-	my @header;
-	foreach my $key (@key) {
-		unless ($key eq 'body') {
-			push(@header, "$key: $$self{$key}");
-		}
-	}
-	return join("\n", @header);
+    my $self = shift;
+    my @key = $self->_header_order;
+    my @header;
+    foreach my $key (@key) {
+        unless ($key eq 'body') {
+            push(@header, "$key: $$self{$key}");
+        }
+    }
+    return join("\n", @header);
 }
 
 sub compose {
-	my $self = shift;
-	my $header = $self->build;
-	
-	chomp(my $header2 = <<"EOF");
+    my $self = shift;
+    my $header = $self->build;
+    
+    chomp(my $header2 = <<"EOF");
 MIME-Version: 1.0
 Content-Type: text/plain; charset=ISO-2022-JP
 Content-Transfer-Encoding: 7bit
 X-Mail-Composer: Mail.pm v$VERSION (Lingua::JA::Mail http://www.cpan.org/)
 EOF
-	
-	$header = join("\n", $header, $header2);
-	
-	my $body = encode('iso-2022-jp', $$self{'body'});
-	
-	return "$header\n\n$body";
+    
+    $header = join("\n", $header, $header2);
+    
+    $self->_preconvert();
+    my $body = encode('iso-2022-jp', $$self{'body'});
+    
+    return "$header\n\n$body";
+}
+
+sub _preconvert {
+    my $self = shift;
+    
+    utf8::decode(my $string = $$self{'body'});
+    $string =~ tr/\x{005C}\x{00A5}\x{2014}\x{203E}\x{2225}\x{FF0D}\x{FF5E}\x{FFE0}\x{FFE1}\x{FFE2}/\x{FF3C}\x{FFE5}\x{2015}\x{FFE3}\x{2016}\x{2212}\x{301C}\x{00A2}\x{00A3}\x{00AC}/;
+    
+    $$self{'body'} = $string;
+    
+    return $self;
 }
 
 sub sendmail {
-	my($self, $sendmail) = @_;
-	unless ($sendmail) {
-		$sendmail = 'sendmail';
-	}
-	
-	my $mail = $self->compose;
-	
-	open(MAIL, "| $sendmail -t -i")
-		or croak "failed piping to $sendmail";
-	print MAIL $mail;
-	close MAIL;
-	return $self;
+    my($self, $sendmail) = @_;
+    unless ($sendmail) {
+        $sendmail = 'sendmail';
+    }
+    
+    my $mail = $self->compose;
+    
+    open(MAIL, "| $sendmail -t -i")
+      or croak "failed piping to $sendmail";
+    print MAIL $mail;
+    close MAIL;
+    return $self;
 }
 ########################################################################
 1;
@@ -83,7 +95,7 @@ Lingua::JA::Mail - compose mail with Japanese charset
  
  # display-name is omitted:
   $mail->add_to('kaori@cpan.tld');
- # with a display-name in the US-ASCII characters:
+ # with a display-name in US-ASCII characters:
   $mail->add_to('sakura@cpan.tld', 'Sakura HARUNO');
  # with a display-name containing Japanese characters:
   $mail->add_to('yuri@cpan.tld', 'NAME CONTAINING JAPANESE CHARS');
@@ -194,11 +206,11 @@ This module runs under Unicode/UTF-8 environment (hence Perl5.8 or later is requ
 
 =head1 AUTHOR
 
-Masanori HATA E<lt>lovewing@geocities.co.jpE<gt> (Saitama, JAPAN)
+Masanori HATA E<lt>lovewing@dream.big.or.jpE<gt> (Saitama, JAPAN)
 
 =head1 COPYRIGHT
 
-Copyright (c) 2003 Masanori HATA. All rights reserved.
+Copyright (c) 2003-2005 Masanori HATA. All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 

@@ -1,4 +1,4 @@
-Lingua/JA/Mail version 0.02
+Lingua/JA/Mail version 0.03
 ===========================
 
  This module is used to compose mail with Japanese charset.
@@ -23,7 +23,7 @@ DEPENDENCIES
 
 COPYRIGHT AND LICENCE
 
- Copyright (c) 2003 Masanori HATA. All rights reserved.
+ Copyright (c) 2003-2005 Masanori HATA. All rights reserved.
 
  This library is free software; you can redistribute it and/or
  modify it under the same terms as Perl itself.

@@ -6,3 +6,4 @@ MANIFEST	(this file)
 README  	for the short descriptions about install
 t/Mail.t	test script for the Lingua::JA::Mail
 t/Header.t	test script for the Lingua::Ja::Mail::Header
+META.yml                                 Module meta-data (added by MakeMaker)
